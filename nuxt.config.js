@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'ERIC - Education Resource',
+    title: 'COVID19-SOCIALITE',
     htmlAttrs: {
       lang: 'en'
     },

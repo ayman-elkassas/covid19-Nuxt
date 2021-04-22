@@ -210,7 +210,7 @@
                     <h2 class="title">
                       Coronavirus <br class="d-sm-none" />(COVID-19)
                     </h2>
-                    <p class="lead">
+                    <p class="lead intro">
                       <strong
                         >COVID-19 is a new illness that can affect your lungs
                         and airways.</strong
@@ -218,14 +218,14 @@
                       It's caused by a virus called coronavirus. It was
                       discovered in December 2019 in Wuhan, Hubei, China.
                     </p>
-                    <p>
+                    <p class="intro">
                       Common signs of infection include respiratory symptoms,
                       fever, cough, shortness of breath and breathing
                       difficulties. In more severe cases, infection can cause
                       pneumonia, severe acute respiratory syndrome, kidney
                       failure and even death.
                     </p>
-                    <p>
+                    <p class="intro">
                       Standard recommendations to prevent infection spread
                       include regular hand washing, covering mouth and nose when
                       coughing and sneezing, thoroughly cooking meat and eggs.
@@ -241,7 +241,7 @@
                     <div class="wgs-head">
                       <h4>What you need to know</h4>
                     </div>
-                    <ul class="wgs-list">
+                    <ul class="wgs-list intro">
                       <li>
                         <a class="scrollto" href="#spread"
                           >How coronavirus is spread</a
@@ -285,7 +285,7 @@
                 Transmission of <br class="d-sm-none" />
                 COVID-19
               </h2>
-              <p>
+              <p class="intro">
                 Because it's a new illness, we do not know exactly how
                 coronavirus spreads from person to person. Similar viruses are
                 spread in cough droplets.
@@ -443,10 +443,10 @@
               </div>
               <div class="section-cta">
                 <div class="row g-gs justify-content-center">
-                  <div class="col-sm-10 col-md-8 col-lg-7 col-xl-8">
+                  <div class="border-p col-sm-10 col-md-8 col-lg-7 col-xl-8">
                     <div class="notes">
-                      <em class="icon ni ni-alert-fill-c"></em>
-                      <p>
+                      <em class="icon-stay icon ni ni-alert-fill-c"></em>
+                      <p class="intro">
                         <strong>Stay at home and call your doctor:</strong> If
                         you think you have been exposed to COVID-19 and develop
                         a fever and any symptoms, such as cough or difficulty
@@ -1170,7 +1170,7 @@
                           </h5>
                           <div id="covid-spreads-02" class="collapse">
                             <div class="accordion-content">
-                              <p>
+                              <p class="intro">
                                 This virus was first detected in Wuhan City,
                                 Hubei Province, China. The first infections were
                                 linked to a live animal market, but the virus is
@@ -2626,10 +2626,22 @@ export default {
 </script>
 
 <style scoped>
+
 @import "~assets/LandingStyle/css/bundle.css";
 @import "~assets/LandingStyle/css/styles.css";
 
-.intro {
+.intro{
   font-family: "Roboto";
 }
+
+.border-p{
+  border:2px solid #2a81ea;
+  border-radius:10px;
+}
+
+.icon-stay{
+  color:#2a81ea;
+}
+
+
 </style>

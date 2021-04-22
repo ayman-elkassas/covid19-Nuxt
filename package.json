@@ -6,7 +6,12 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "heroku-postbuild": "npm run build"
+  },
+  "engines": {
+    "node": "8.0.0",
+    "npm": "6.0.0"
   },
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^5.15.2",
@@ -29,6 +34,7 @@
     "overlayscrollbars-vue": "^0.2.2",
     "pace": "0.0.4",
     "popper.js": "^1.16.1",
+    "postcss-svgo": "^5.0.0",
     "vue-filepond": "^6.0.3",
     "vue-form-wizard": "^0.8.4",
     "vue-multiselect": "^2.1.6",
