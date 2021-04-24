@@ -107,7 +107,7 @@ export default {
       'nuxt-global-var',
       {
         data: {
-          PREFIX: 'https://covid19-server-socialist.herokuapp.com/media'
+          PREFIX: 'https://covid19-server-socialist.herokuapp.com/uploads/media/'
         }
       }
     ]
