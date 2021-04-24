@@ -160,7 +160,7 @@ export default {
       }).catch((error) => {
         this.openNotification('top-left', 'danger',
           `<i class='bx bxs-bug' ></i>`,
-          'Make Sure From Credentials',
+          error,
           'Username or password not matched with account credentials,' +
           'make sure and try again...');
         this.loading.close()
