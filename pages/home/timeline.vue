@@ -7,6 +7,28 @@
       <div class="content-wrapper">
         <div class="content-body"><div id="user-profile">
           <!-- profile info section -->
+          <div data-v-07507170="" data-v-7b339cf2="" class="profile-header-nav">
+            <nav data-v-07507170="" data-v-7b339cf2="" class="nav-back navbar navbar-expand-md navbar-light justify-content-end justify-content-md-between w-100">
+              <button  data-v-07507170="" data-v-7b339cf2="" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="btn btn-icon navbar-toggler">
+                <i data-v-07507170="" data-v-7b339cf2="" data-feather="align-justify" class="font-medium-5"></i>
+              </button> <div data-v-07507170="" data-v-7b339cf2="" id="navbarSupportedContent" class="collapse navbar-collapse">
+              <div data-v-07507170="" data-v-7b339cf2="" class="buttons-timeline profile-tabs d-flex justify-content-between flex-wrap mt-1 mt-md-0">
+                <button @click="addPost()" data-v-07507170="" data-v-7b339cf2="" class="btn btn-primary">
+                  <i data-v-07507170="" data-v-7b339cf2="" data-feather="add" class="d-block d-md-none"></i>
+                  <span data-v-07507170="" data-v-7b339cf2="" class="font-weight-bold d-none d-md-block">Add Instruction</span>
+                </button>
+                <button data-v-07507170="" data-v-7b339cf2="" class="btn btn-primary">
+                  <i data-v-07507170="" data-v-7b339cf2="" data-feather="add" class="d-block d-md-none"></i>
+                  <span data-v-07507170="" data-v-7b339cf2="" class="font-weight-bold d-none d-md-block">Add Post</span>
+                </button>
+                <button data-v-07507170="" data-v-7b339cf2="" class="btn btn-primary">
+                  <i data-v-07507170="" data-v-7b339cf2="" data-feather="add" class="d-block d-md-none"></i>
+                  <span data-v-07507170="" data-v-7b339cf2="" class="font-weight-bold d-none d-md-block">Dr Follow</span>
+                </button>
+              </div>
+            </div>
+            </nav>
+          </div>
           <section id="profile-info">
             <div class="row">
               <!-- left profile info section -->
@@ -1018,6 +1040,7 @@
 <script>
 
 import SelectSkills from "@/pages/home/select-skills";
+
 export default {
   name: "timeline",
   components: {SelectSkills},
@@ -1029,10 +1052,25 @@ export default {
   },
   mounted() {
     this.completeInfo=this.$route.params.completeSkills;
+  },
+  methods:{
+    addPost(){
+      this.$router.push({name: 'post-New',params: { status: 1 }});
+    }
   }
 }
 </script>
 
 <style scoped>
+.nav-back{
+  /*background-color: transparent;*/
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
+  transition: all .3s ease-in-out,background 0s,color 0s,border-color 0s;
+}
 
+.buttons-timeline{
+  margin-left:0px ;
+}
 </style>

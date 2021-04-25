@@ -107,7 +107,7 @@ export default {
       'nuxt-global-var',
       {
         data: {
-          PREFIX: 'https://covid19-server-socialist.herokuapp.com/uploads/media/'
+          PREFIX: 'http://127.0.0.1:8000/storage'
         }
       }
     ]
@@ -115,7 +115,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL:"https://covid19-server-socialist.herokuapp.com",
+    baseURL:"http://127.0.0.1:8000",
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

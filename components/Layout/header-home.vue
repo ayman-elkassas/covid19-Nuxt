@@ -15,7 +15,7 @@
             <vs-avatar badge badge-color="success" history primary>
               <img :src="$get('PREFIX')+$auth.user.avatar" alt="">
               <template #badge>
-                AE
+                {{$auth.user.fname[0] + $auth.user.lname[0]}}
               </template>
             </vs-avatar>
           </vs-navbar-item>
