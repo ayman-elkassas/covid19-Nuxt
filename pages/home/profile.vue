@@ -284,29 +284,28 @@
               <!-- center profile info section -->
               <div class="col-lg-6 col-12 order-1 order-lg-2">
                 <!-- post 1 -->
-                <div class="card">
+                <div v-for="post in getPostsByUserId" class="card">
                   <div class="card-body">
                     <div class="d-flex justify-content-start align-items-center mb-1">
                       <!-- avatar -->
                       <div class="avatar mr-1">
-                        <vs-avatar circle>
-                          <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-4.jpg" alt="">
+                        <vs-avatar circle badge badge-color="success">
+                          <img :src="$get('PREFIX')+$auth.user.avatar" alt="">
                         </vs-avatar>
                       </div>
                       <!--/ avatar -->
                       <div class="profile-user-info">
-                        <h6 class="mb-0">Leeanna Alvord</h6>
-                        <small class="text-muted">12 Dec 2018 at 1:16 AM</small>
+                        <h6 class="mb-0">{{post.title}}</h6>
+                        <small class="text-muted">{{moment(post.create_at).startOf('minute').fromNow() }}</small>
                       </div>
                     </div>
                     <p class="card-text">
-                      Wonderful Machine· A well-written bio allows viewers to get to know a photographer beyond the work. This
-                      can make the difference when presenting to clients who are looking for the perfect fit.
+                      {{post.desc.replace(/<[^>]*>/g, '')}}
                     </p>
                     <!-- post img -->
                     <img
                       class="img-fluid rounded mb-75"
-                      src="~/assets/home/app-assets/images/profile/post-media/2.jpg"
+                      :src="$get('PREFIX')+post.post_cover"
                       alt="avatar img"
                     />
                     <!--/ post img -->
@@ -367,23 +366,6 @@
                     <div class="d-flex align-items-start mb-1">
                       <div class="avatar mt-25 mr-75">
                         <vs-avatar>
-                          <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-3.jpg" alt="">
-                        </vs-avatar>
-                      </div>
-                      <div class="profile-user-info w-100">
-                        <div class="d-flex align-items-center justify-content-between">
-                          <h6 class="mb-0">Ayman Elkassas</h6>
-                          <a href="javascript:void(0)">
-                            <i data-feather="heart" class="text-body font-medium-3"></i>
-                            <span class="align-middle text-muted">34</span>
-                          </a>
-                        </div>
-                        <small>Easy & smart fuzzy search🕵🏻 functionality which enables users to search quickly.</small>
-                      </div>
-                    </div>
-                    <div class="d-flex align-items-start mb-1">
-                      <div class="avatar mt-25 mr-75">
-                        <vs-avatar>
                           <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-2.jpg" alt="">
                         </vs-avatar>
                       </div>
@@ -412,397 +394,6 @@
                   </div>
                 </div>
                 <!--/ post 1 -->
-
-                <!-- post 1 -->
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-start align-items-center mb-1">
-                      <!-- avatar -->
-                      <div class="avatar mr-1">
-                        <vs-avatar circle>
-                          <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-4.jpg" alt="">
-                        </vs-avatar>
-                      </div>
-                      <!--/ avatar -->
-                      <div class="profile-user-info">
-                        <h6 class="mb-0">Leeanna Alvord</h6>
-                        <small class="text-muted">12 Dec 2018 at 1:16 AM</small>
-                      </div>
-                    </div>
-                    <p class="card-text">
-                      Wonderful Machine· A well-written bio allows viewers to get to know a photographer beyond the work. This
-                      can make the difference when presenting to clients who are looking for the perfect fit.
-                    </p>
-                    <!-- post img -->
-                    <img
-                      class="img-fluid rounded mb-75"
-                      src="~/assets/home/app-assets/images/profile/post-media/2.jpg"
-                      alt="avatar img"
-                    />
-                    <!--/ post img -->
-
-                    <!-- like share -->
-                    <div class="row d-flex justify-content-start align-items-center flex-wrap pb-50">
-                      <div class="col-sm-6 d-flex justify-content-between justify-content-sm-start mb-2">
-                        <a href="javascript:void(0)" class="d-flex align-items-center text-muted text-nowrap">
-                          <i class="bx bx-heart"></i>
-                          <span>&nbsp;1.25k</span>
-                        </a>
-
-                        <!-- avatar group with tooltip -->
-                        <div class="d-flex align-items-center">
-                          <div class="avatar-group ml-1">
-
-                            <vs-avatar-group max="7">
-                              <vs-avatar>
-                                <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-1.jpg" alt="">
-                              </vs-avatar>
-                              <vs-avatar>
-                                <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-2.jpg" alt="">
-                              </vs-avatar>
-                              <vs-avatar>
-                                <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-3.jpg" alt="">
-                              </vs-avatar>
-                              <vs-avatar>
-                                <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-4.jpg" alt="">
-                              </vs-avatar>
-                              <vs-avatar>
-                                <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-5.jpg" alt="">
-                              </vs-avatar>
-                              <vs-avatar>
-                                <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-4.jpg" alt="">
-                              </vs-avatar>
-                            </vs-avatar-group>
-
-                          </div>
-                          <a href="javascript:void(0)" class="text-muted text-nowrap ml-50">+140 more</a>
-                        </div>
-                        <!-- avatar group with tooltip -->
-                      </div>
-
-                      <!-- share and like count and icons -->
-                      <div class="col-sm-6 d-flex justify-content-between justify-content-sm-end align-items-center mb-2">
-                        <i class="bx bx-comment"></i>
-                        <span class="text-muted mr-1">&nbsp;1.25k</span>
-
-                        <i class="bx bx-share"></i>
-
-                        <span class="text-muted">&nbsp;1.25k</span>
-                      </div>
-                      <!-- share and like count and icons -->
-                    </div>
-                    <!-- like share -->
-
-                    <!-- comments -->
-                    <div class="d-flex align-items-start mb-1">
-                      <div class="avatar mt-25 mr-75">
-                        <vs-avatar>
-                          <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-3.jpg" alt="">
-                        </vs-avatar>
-                      </div>
-                      <div class="profile-user-info w-100">
-                        <div class="d-flex align-items-center justify-content-between">
-                          <h6 class="mb-0">Kitty Allanson</h6>
-                          <a href="javascript:void(0)">
-                            <i data-feather="heart" class="text-body font-medium-3"></i>
-                            <span class="align-middle text-muted">34</span>
-                          </a>
-                        </div>
-                        <small>Easy & smart fuzzy search🕵🏻 functionality which enables users to search quickly.</small>
-                      </div>
-                    </div>
-                    <div class="d-flex align-items-start mb-1">
-                      <div class="avatar mt-25 mr-75">
-                        <vs-avatar>
-                          <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-2.jpg" alt="">
-                        </vs-avatar>
-                      </div>
-                      <div class="profile-user-info w-100">
-                        <div class="d-flex align-items-center justify-content-between">
-                          <h6 class="mb-0">Jackey Potter</h6>
-                          <a href="javascript:void(0)">
-                            <i data-feather="heart" class="profile-likes font-medium-3"></i>
-                            <span class="align-middle text-muted">61</span>
-                          </a>
-                        </div>
-                        <small>
-                          Unlimited color🖌 options allows you to set your application color as per your branding 🤪.
-                        </small>
-                      </div>
-                    </div>
-                    <!--/ comments -->
-
-                    <!-- comment box -->
-                    <fieldset class="form-label-group mb-75">
-                      <textarea class="form-control" id="label-textarea" rows="3" placeholder="Add Comment"></textarea>
-                      <label for="label-textarea">Add Comment</label>
-                    </fieldset>
-                    <!--/ comment box -->
-                    <button type="button" class="btn btn-sm btn-primary">Post Comment</button>
-                  </div>
-                </div>
-                <!--/ post 1 -->
-
-                <!-- post 1 -->
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-start align-items-center mb-1">
-                      <!-- avatar -->
-                      <div class="avatar mr-1">
-                        <vs-avatar circle>
-                          <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-4.jpg" alt="">
-                        </vs-avatar>
-                      </div>
-                      <!--/ avatar -->
-                      <div class="profile-user-info">
-                        <h6 class="mb-0">Leeanna Alvord</h6>
-                        <small class="text-muted">12 Dec 2018 at 1:16 AM</small>
-                      </div>
-                    </div>
-                    <p class="card-text">
-                      Wonderful Machine· A well-written bio allows viewers to get to know a photographer beyond the work. This
-                      can make the difference when presenting to clients who are looking for the perfect fit.
-                    </p>
-                    <!-- post img -->
-                    <img
-                      class="img-fluid rounded mb-75"
-                      src="~/assets/home/app-assets/images/profile/post-media/2.jpg"
-                      alt="avatar img"
-                    />
-                    <!--/ post img -->
-
-                    <!-- like share -->
-                    <div class="row d-flex justify-content-start align-items-center flex-wrap pb-50">
-                      <div class="col-sm-6 d-flex justify-content-between justify-content-sm-start mb-2">
-                        <a href="javascript:void(0)" class="d-flex align-items-center text-muted text-nowrap">
-                          <i class="bx bx-heart"></i>
-                          <span>&nbsp;1.25k</span>
-                        </a>
-
-                        <!-- avatar group with tooltip -->
-                        <div class="d-flex align-items-center">
-                          <div class="avatar-group ml-1">
-
-                            <vs-avatar-group max="7">
-                              <vs-avatar>
-                                <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-1.jpg" alt="">
-                              </vs-avatar>
-                              <vs-avatar>
-                                <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-2.jpg" alt="">
-                              </vs-avatar>
-                              <vs-avatar>
-                                <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-3.jpg" alt="">
-                              </vs-avatar>
-                              <vs-avatar>
-                                <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-4.jpg" alt="">
-                              </vs-avatar>
-                              <vs-avatar>
-                                <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-5.jpg" alt="">
-                              </vs-avatar>
-                              <vs-avatar>
-                                <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-4.jpg" alt="">
-                              </vs-avatar>
-                            </vs-avatar-group>
-
-                          </div>
-                          <a href="javascript:void(0)" class="text-muted text-nowrap ml-50">+140 more</a>
-                        </div>
-                        <!-- avatar group with tooltip -->
-                      </div>
-
-                      <!-- share and like count and icons -->
-                      <div class="col-sm-6 d-flex justify-content-between justify-content-sm-end align-items-center mb-2">
-                        <i class="bx bx-comment"></i>
-                        <span class="text-muted mr-1">&nbsp;1.25k</span>
-
-                        <i class="bx bx-share"></i>
-
-                        <span class="text-muted">&nbsp;1.25k</span>
-                      </div>
-                      <!-- share and like count and icons -->
-                    </div>
-                    <!-- like share -->
-
-                    <!-- comments -->
-                    <div class="d-flex align-items-start mb-1">
-                      <div class="avatar mt-25 mr-75">
-                        <vs-avatar>
-                          <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-3.jpg" alt="">
-                        </vs-avatar>
-                      </div>
-                      <div class="profile-user-info w-100">
-                        <div class="d-flex align-items-center justify-content-between">
-                          <h6 class="mb-0">Kitty Allanson</h6>
-                          <a href="javascript:void(0)">
-                            <i data-feather="heart" class="text-body font-medium-3"></i>
-                            <span class="align-middle text-muted">34</span>
-                          </a>
-                        </div>
-                        <small>Easy & smart fuzzy search🕵🏻 functionality which enables users to search quickly.</small>
-                      </div>
-                    </div>
-                    <div class="d-flex align-items-start mb-1">
-                      <div class="avatar mt-25 mr-75">
-                        <vs-avatar>
-                          <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-2.jpg" alt="">
-                        </vs-avatar>
-                      </div>
-                      <div class="profile-user-info w-100">
-                        <div class="d-flex align-items-center justify-content-between">
-                          <h6 class="mb-0">Jackey Potter</h6>
-                          <a href="javascript:void(0)">
-                            <i data-feather="heart" class="profile-likes font-medium-3"></i>
-                            <span class="align-middle text-muted">61</span>
-                          </a>
-                        </div>
-                        <small>
-                          Unlimited color🖌 options allows you to set your application color as per your branding 🤪.
-                        </small>
-                      </div>
-                    </div>
-                    <!--/ comments -->
-
-                    <!-- comment box -->
-                    <fieldset class="form-label-group mb-75">
-                      <textarea class="form-control" id="label-textarea" rows="3" placeholder="Add Comment"></textarea>
-                      <label for="label-textarea">Add Comment</label>
-                    </fieldset>
-                    <!--/ comment box -->
-                    <button type="button" class="btn btn-sm btn-primary">Post Comment</button>
-                  </div>
-                </div>
-                <!--/ post 1 -->
-
-                <!-- post 1 -->
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-start align-items-center mb-1">
-                      <!-- avatar -->
-                      <div class="avatar mr-1">
-                        <vs-avatar circle>
-                          <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-4.jpg" alt="">
-                        </vs-avatar>
-                      </div>
-                      <!--/ avatar -->
-                      <div class="profile-user-info">
-                        <h6 class="mb-0">Leeanna Alvord</h6>
-                        <small class="text-muted">12 Dec 2018 at 1:16 AM</small>
-                      </div>
-                    </div>
-                    <p class="card-text">
-                      Wonderful Machine· A well-written bio allows viewers to get to know a photographer beyond the work. This
-                      can make the difference when presenting to clients who are looking for the perfect fit.
-                    </p>
-                    <!-- post img -->
-                    <img
-                      class="img-fluid rounded mb-75"
-                      src="~/assets/home/app-assets/images/profile/post-media/2.jpg"
-                      alt="avatar img"
-                    />
-                    <!--/ post img -->
-
-                    <!-- like share -->
-                    <div class="row d-flex justify-content-start align-items-center flex-wrap pb-50">
-                      <div class="col-sm-6 d-flex justify-content-between justify-content-sm-start mb-2">
-                        <a href="javascript:void(0)" class="d-flex align-items-center text-muted text-nowrap">
-                          <i class="bx bx-heart"></i>
-                          <span>&nbsp;1.25k</span>
-                        </a>
-
-                        <!-- avatar group with tooltip -->
-                        <div class="d-flex align-items-center">
-                          <div class="avatar-group ml-1">
-
-                            <vs-avatar-group max="7">
-                              <vs-avatar>
-                                <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-1.jpg" alt="">
-                              </vs-avatar>
-                              <vs-avatar>
-                                <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-2.jpg" alt="">
-                              </vs-avatar>
-                              <vs-avatar>
-                                <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-3.jpg" alt="">
-                              </vs-avatar>
-                              <vs-avatar>
-                                <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-4.jpg" alt="">
-                              </vs-avatar>
-                              <vs-avatar>
-                                <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-5.jpg" alt="">
-                              </vs-avatar>
-                              <vs-avatar>
-                                <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-4.jpg" alt="">
-                              </vs-avatar>
-                            </vs-avatar-group>
-
-                          </div>
-                          <a href="javascript:void(0)" class="text-muted text-nowrap ml-50">+140 more</a>
-                        </div>
-                        <!-- avatar group with tooltip -->
-                      </div>
-
-                      <!-- share and like count and icons -->
-                      <div class="col-sm-6 d-flex justify-content-between justify-content-sm-end align-items-center mb-2">
-                        <i class="bx bx-comment"></i>
-                        <span class="text-muted mr-1">&nbsp;1.25k</span>
-
-                        <i class="bx bx-share"></i>
-
-                        <span class="text-muted">&nbsp;1.25k</span>
-                      </div>
-                      <!-- share and like count and icons -->
-                    </div>
-                    <!-- like share -->
-
-                    <!-- comments -->
-                    <div class="d-flex align-items-start mb-1">
-                      <div class="avatar mt-25 mr-75">
-                        <vs-avatar>
-                          <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-3.jpg" alt="">
-                        </vs-avatar>
-                      </div>
-                      <div class="profile-user-info w-100">
-                        <div class="d-flex align-items-center justify-content-between">
-                          <h6 class="mb-0">Kitty Allanson</h6>
-                          <a href="javascript:void(0)">
-                            <i data-feather="heart" class="text-body font-medium-3"></i>
-                            <span class="align-middle text-muted">34</span>
-                          </a>
-                        </div>
-                        <small>Easy & smart fuzzy search🕵🏻 functionality which enables users to search quickly.</small>
-                      </div>
-                    </div>
-                    <div class="d-flex align-items-start mb-1">
-                      <div class="avatar mt-25 mr-75">
-                        <vs-avatar>
-                          <img src="~/assets/home/app-assets/images/portrait/small/avatar-s-2.jpg" alt="">
-                        </vs-avatar>
-                      </div>
-                      <div class="profile-user-info w-100">
-                        <div class="d-flex align-items-center justify-content-between">
-                          <h6 class="mb-0">Jackey Potter</h6>
-                          <a href="javascript:void(0)">
-                            <i data-feather="heart" class="profile-likes font-medium-3"></i>
-                            <span class="align-middle text-muted">61</span>
-                          </a>
-                        </div>
-                        <small>
-                          Unlimited color🖌 options allows you to set your application color as per your branding 🤪.
-                        </small>
-                      </div>
-                    </div>
-                    <!--/ comments -->
-
-                    <!-- comment box -->
-                    <fieldset class="form-label-group mb-75">
-                      <textarea class="form-control" id="label-textarea" rows="3" placeholder="Add Comment"></textarea>
-                      <label for="label-textarea">Add Comment</label>
-                    </fieldset>
-                    <!--/ comment box -->
-                    <button type="button" class="btn btn-sm btn-primary">Post Comment</button>
-                  </div>
-                </div>
-                <!--/ post 1 -->
-
               </div>
               <!--/ center profile info section -->
 
@@ -1104,9 +695,26 @@
 
 <script>
 
+
 export default {
   name: "profile",
   layout:"Home/home",
+  data(){
+    return{
+    }
+  },
+  beforeCreate() {
+    this.$store.dispatch("AllPostById",this.$auth.user.id);
+  },
+  computed:{
+    getPostsByUserId(){
+      //todo:last step render value to component
+      return this.$store.getters.getPostsByUserId;
+    },
+  },
+  mounted() {
+
+  },
 }
 </script>
 

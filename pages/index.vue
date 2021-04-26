@@ -8,7 +8,7 @@
             <div class="container">
               <div class="nk-navbar-wrap">
                 <div class="nk-navbar-logo logo">
-                  <a href="index.html" class="logo-link">
+                  <nuxt-link to="/home/timeline" class="logo-link">
                     <img
                       class="logo-dark"
                       src="~/assets/LandingStyle/images/logo-dark.png"
@@ -19,7 +19,7 @@
                       src="~/assets/LandingStyle/images/logo-white.png"
                       alt="logo"
                     />
-                  </a>
+                  </nuxt-link>
                 </div>
                 <div class="nk-navbar-toggle d-lg-none">
                   <a href="#" class="toggle" data-menu-toggle="navbar-menu"
@@ -73,46 +73,26 @@
                         >News</a
                       >
                     </li>
-                    <!-- <li class="nk-menu-item">
-                      <a class="nav-link nk-menu-link nk-menu-toggle" href="#"
-                        >More</a
-                      >
-                      <ul class="nk-menu-dropdown nk-menu-sub">
-                        <li class="nk-menu-item">
-                          <a class="nav-link nk-menu-link" href="index-2.html"
-                            >Landing V1</a
-                          >
-                        </li>
-                        <li class="nk-menu-item">
-                          <a class="nav-link nk-menu-link" href="index-v2.html"
-                            >Landing V2</a
-                          >
-                        </li>
-                        <li class="nk-menu-item">
-                          <a
-                            class="nav-link nk-menu-link"
-                            href="prevention.html"
-                            >Inner Page</a
-                          >
-                        </li>
-                      </ul>
-                    </li> -->
-                    <li>
+                    <li v-if="!authenticate">
                       <nuxt-link to="/auth/signup"
                         ><span>Sign up</span></nuxt-link
                       >
                     </li>
-                    <li>
+                    <li v-if="!authenticate">
                       <nuxt-link to="/auth/login"
                         ><span>Log in</span></nuxt-link
                       >
                     </li>
+
                   </ul>
-                  <ul class="nk-menu-btns">
-                    <li class="nk-menu-item">
-                      <a href="#protect" class="btn btn-sm scrollto nav-link"
-                        >Do &amp; Don’t</a
+                  <ul v-if="authenticate" class="nk-menu-btns">
+                    <li>
+                      <vs-button
+                        circle
+                        @click="logout()"
                       >
+                        Logout
+                      </vs-button>
                     </li>
                   </ul>
                 </nav>
@@ -2506,12 +2486,12 @@
                 <div class="col-lg-3 col-md-9 mr-auto">
                   <div class="wgs wgs-about">
                     <div class="wgs-logo logo">
-                      <a href="index.html" class="logo-link">
+                      <nuxt-link to="/home/timeline" class="logo-link">
                         <img
                           src="~/assets/LandingStyle/images/logo-white.png"
                           alt="logo"
                         />
-                      </a>
+                      </nuxt-link>
                     </div>
                     <div class="wgs-about-text">
                       <p>
@@ -2621,7 +2601,18 @@
 <script>
 export default {
   name: "index",
-  layout: "LandingLayout/landing"
+  layout: "LandingLayout/landing",
+  data(){
+    return {
+      active: 'home',
+      authenticate:this.$auth.loggedIn,
+    }
+  },
+  methods:{
+    logout(){
+      this.$auth.logout();
+    },
+  }
 };
 </script>
 

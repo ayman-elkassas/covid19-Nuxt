@@ -44,6 +44,7 @@ export default {
     '@/plugins/vuesax',
     '@/plugins/multiselect',
     '@/plugins/overlayscrollbars',
+    '@/plugins/moment',
     { src: "@/plugins/vuetimeline.js" },
     { src: "@/plugins/vue-form-wizard.js" },
     { src: "@/plugins/vue-file-pond.js" },

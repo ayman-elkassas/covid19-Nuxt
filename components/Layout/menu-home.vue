@@ -9,7 +9,9 @@
       danger
     >
       <template #logo>
-        <img src="~/assets/home/app-assets/images/logo/covid.png" alt="">
+        <nuxt-link to="/">
+          <img src="~/assets/home/app-assets/images/logo/covid.png" alt="">
+        </nuxt-link>
       </template>
       <vs-sidebar-item
         to="/home/timeline"
@@ -18,14 +20,6 @@
           <i class='bx bx-home'></i>
         </template>
         Home
-      </vs-sidebar-item>
-      <vs-sidebar-item
-        to="/home/file-manager"
-        id="market">
-        <template #icon>
-          <i class='bx bx-save'></i>
-        </template>
-        File Manager
       </vs-sidebar-item>
       <vs-sidebar-item id="Music">
         <template #icon>

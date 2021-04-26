@@ -25,9 +25,9 @@
             <i class='bx bx-home'></i>
             Home
           </vs-navbar-item>
-          <vs-navbar-item :active="active === 'components'" id="components">
+          <vs-navbar-item to="/story/blog" :active="active === 'components'" id="components">
             <i class='bx bx-album'></i>
-            Components
+            Covid Blogs
           </vs-navbar-item>
           <vs-navbar-item :active="active === 'license'" id="license">
             <i class='bx bx-book'></i>
@@ -37,7 +37,7 @@
             <i class='bx bx-alarm'></i>
             Documents
           </vs-navbar-item>
-          <vs-navbar-item :active="active === 'components'" id="components">
+          <vs-navbar-item>
             <i class='bx bx-album'></i>
             Components
           </vs-navbar-item>
