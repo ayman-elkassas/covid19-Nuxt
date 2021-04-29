@@ -46,12 +46,27 @@
 
     <br>
 
+    <vs-row>
+      <vs-col w="6">
+        <vs-radio v-model="picked" val="1">
+          Patient
+        </vs-radio>
+      </vs-col>
+      <vs-col w="6">
+        <vs-radio v-model="picked" val="2">
+          Doctor
+        </vs-radio>
+      </vs-col>
+    </vs-row>
+    <br>
+
+
     <button class="btn btn-primary btn-block mb-4" :disabled="!activeSignUp" @click="openLoading()">Sign up</button>
     <div class="text-center">
       <div class="saprator my-4"><span>OR</span></div>
-      <button class="btn text-white bg-facebook mb-2 mr-2  wid-40 px-0 hei-40 rounded-circle"><i class="bx bxl-facebook"></i></button>
-      <button class="btn text-white bg-googleplus mb-2 mr-2 wid-40 px-0 hei-40 rounded-circle"><i class="bx bxl-google-plus"></i></button>
-      <button class="btn text-white bg-twitter mb-2  wid-40 px-0 hei-40 rounded-circle"><i class="bx bxl-twitter"></i></button>
+<!--      <button class="btn text-white bg-facebook mb-2 mr-2  wid-40 px-0 hei-40 rounded-circle"><i class="bx bxl-facebook"></i></button>-->
+<!--      <button class="btn text-white bg-googleplus mb-2 mr-2 wid-40 px-0 hei-40 rounded-circle"><i class="bx bxl-google-plus"></i></button>-->
+<!--      <button class="btn text-white bg-twitter mb-2  wid-40 px-0 hei-40 rounded-circle"><i class="bx bxl-twitter"></i></button>-->
       <p class="mt-4">Already have an account? <nuxt-link to="/auth/login" class="f-w-400">Signin</nuxt-link></p>
       <p class="mb-0 text-muted">Back to home? <nuxt-link to="/" class="f-w-400">Home</nuxt-link></p>
     </div>
@@ -59,7 +74,7 @@
     <div >
       <vs-dialog prevent-close blur v-model="active">
 
-        <complete-info :email="request.email" :password="request.password"></complete-info>
+        <complete-info :role="picked" :email="request.email" :password="request.password"></complete-info>
 
       </vs-dialog>
     </div>
@@ -67,6 +82,9 @@
 
   </div>
 </template>
+
+<!--role:2 doctor-->
+<!--role:2 patient-->
 
 <script>
 import CompleteInfo from "@/pages/auth/completeInfo";
@@ -80,7 +98,8 @@ export default {
       request: {
         email: "",
         password: "",
-      }
+      },
+      picked:1,
     }
   },
   computed:{

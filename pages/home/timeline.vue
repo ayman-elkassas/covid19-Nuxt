@@ -32,6 +32,7 @@
                 <vs-button
                   flat
                   icon
+                  @click="show1=true"
                 >
                   <i class='bx bxs-user-check'></i>&nbsp; Follow
                 </vs-button>
@@ -49,7 +50,7 @@
                     <h5>Covid19 Feeds</h5>
                     <!-- twitter feed -->
                     <div v-for="blog in getBlogs" class="profile-twitter-feed mt-1">
-                      <div class="d-flex justify-content-start align-items-center mb-1">
+                      <div v-if="blog.blog_user!==null" class="d-flex justify-content-start align-items-center mb-1">
                         <div class="avatar mr-1">
                           <img :src="$get('PREFIX')+blog.blog_user.avatar" alt="" height="40" width="40">
                         </div>
@@ -64,12 +65,29 @@
                           <i data-feather="star" class="font-medium-3"></i>
                         </div>
                       </div>
+                      <div v-else-if="blog.blog_doctor!==null" class="d-flex justify-content-start align-items-center mb-1">
+                        <div class="avatar mr-1">
+                          <img :src="$get('PREFIX')+blog.blog_doctor.avatar" alt="" height="40" width="40">
+                        </div>
+                        <div class="profile-user-info">
+                          <h6 class="mb-0">{{ blog.blog_doctor.fname + " "+blog.blog_doctor.lname}}</h6>
+                          <a href="javascript:void(0)">
+                            <small class="text-muted">{{moment(blog.blog_doctor.create_at).startOf('minute').fromNow() }}</small>
+                            <i data-feather="check-circle"></i>
+                          </a>
+                        </div>
+                        <div class="profile-star ml-auto">
+                          <i data-feather="star" class="font-medium-3"></i>
+                        </div>
+                      </div>
                       <p class="card-text mb-50">{{ blog.title }}</p>
                       <a href="javascript:void(0)">
                         <small>#covid19 #stories</small>
                       </a>
                     </div>
-
+                    <div v-if="getBlogs.length<=0">
+                      <p class="card-text mb-50">No blogs yet</p>
+                    </div>
                   </div>
                 </div>
                 <!--/ twitter feed card -->
@@ -85,7 +103,7 @@
                       <!-- avatar -->
                       <div class="avatar mr-1">
                         <vs-avatar circle badge badge-color="success">
-                          <img :src="$get('PREFIX')+$auth.user.avatar" alt="">
+                          <img :src="$get('PREFIX')+post.avatar" alt="">
                         </vs-avatar>
                       </div>
                       <!--/ avatar -->
@@ -93,6 +111,9 @@
                         <h6 class="mb-0">{{post.title}}</h6>
                         <small class="text-muted">{{moment(post.create_at).startOf('minute').fromNow() }}</small>
                       </div>
+
+<!--                      {{(post.user_id!=null && post.user_id===$auth.user.id)?hideDel(false):hideDel(true)}}-->
+<!--                      {{(post.doctor_id!=null && post.doctor_id===$auth.user.id)?hideDel(false):hideDel(true)}}-->
                     </div>
                     <p class="card-text">
                       {{post.desc.replace(/<[^>]*>/g, '')}}
@@ -146,12 +167,16 @@
 
                       <!-- share and like count and icons -->
                       <div class="col-sm-6 d-flex justify-content-between justify-content-sm-end align-items-center mb-2">
-                        <i class="bx bx-comment"></i>
-                        <span class="text-muted mr-1">&nbsp;1.25k</span>
-
-                        <i class="bx bx-share"></i>
-
-                        <span class="text-muted">&nbsp;1.25k</span>
+                        <div>
+                          <vs-button
+                            icon
+                            danger
+                            flat
+                            @click="deletePost(post.id)"
+                          >
+                            <i class='bx bxs-trash' ></i>
+                          </vs-button>
+                        </div>
                       </div>
                       <!-- share and like count and icons -->
                     </div>
@@ -180,13 +205,32 @@
                     <!--/ comments -->
 
                     <!-- comment box -->
-                    <fieldset class="form-label-group mb-75">
-                      <textarea class="form-control" id="label-textarea" rows="3" placeholder="Add Comment"></textarea>
-                      <label for="label-textarea">Add Comment</label>
+                    <fieldset  class="form-label-group mb-75">
+                      <textarea  class="form-control" id="label-textarea" rows="3" placeholder="Add Comment"></textarea>
+                      <label  for="label-textarea">Add Comment</label>
                     </fieldset>
                     <!--/ comment box -->
-                    <button type="button" class="btn btn-sm btn-primary">Post Comment</button>
+                    <button @click="comment()" type="button" class="btn btn-sm btn-primary">Post Comment</button>
                   </div>
+                </div>
+                <div v-if="getPostsByUserId.length<=0">
+                  <vs-alert :page.sync="page" >
+                    <template #title>
+                      No Posts Yet
+                    </template>
+
+                    <template #page-1>
+                      Most people infected with the COVID-19 virus will experience mild to moderate respiratory illness and recover without requiring special treatment.
+                    </template>
+
+                    <template #page-2>
+                      Older people, and those with underlying medical problems like cardiovascular disease, diabetes, chronic respiratory disease, and cancer are more likely to develop serious illness.
+                    </template>
+
+                    <template #page-3>
+                      The best way to prevent and slow down transmission is to be well informed about the COVID-19 virus, the disease it causes and how it spreads.
+                    </template>
+                  </vs-alert>
                 </div>
                 <!--/ post 1 -->
               </div>
@@ -199,28 +243,33 @@
                   <div class="card-body">
                     <h5>Suggestions</h5>
                     <div v-for="user in getUsers" class="d-flex justify-content-start align-items-center mt-2">
-                      <div class="avatar mr-75">
-                        <vs-avatar badge badge-color="success" circle>
-                          <img
-                            :src="$get('PREFIX')+user.avatar"
-                            alt="avatar"
-                            height="40"
-                            width="40"
-                          />
-                        </vs-avatar>
+                        <div v-if="user.id!=$auth.user.id" class="avatar mr-75">
+                          <vs-avatar badge badge-color="success" circle>
+                            <img
+                              :src="$get('PREFIX')+user.avatar"
+                              alt="avatar"
+                              height="40"
+                              width="40"
+                            />
+                          </vs-avatar>
 
-                      </div>
-                      <div class="profile-user-info">
-                        <h6 class="mb-0">{{ user.fname + " "+user.lname}}</h6>
-                        <small class="text-muted">6 Mutual Friends</small>
-                      </div>
-                      <vs-button
-                        icon
-                        :active="active == 0"
-                        @click="active = 0"
-                      >
-                        <i class='bx bx-plus'></i>
-                      </vs-button>
+                        </div>
+                        <div v-if="user.id!=$auth.user.id" class="profile-user-info">
+                          <h6 class="mb-0">{{ user.fname[0] + "."+user.lname}}</h6>
+                          <small class="text-muted">6 Mutual</small>
+                        </div>
+                        <vs-button
+                          v-if="user.id!=$auth.user.id"
+                          icon
+                          flat
+
+                          @click="follow(user.id,true)"
+                        >
+                          <i class='bx bx-plus'></i>
+                        </vs-button>
+                    </div>
+                    <div v-if="getUsers.length<=0">
+                      <p class="card-text mb-50">No Users yet</p>
                     </div>
 
                   </div>
@@ -232,11 +281,11 @@
             </div>
 
             <!-- reload button -->
-            <div class="row">
-              <div class="col-12 text-center">
-                <button type="button" class="btn btn-sm btn-primary block-element border-0 mb-1">Load More</button>
-              </div>
-            </div>
+<!--            <div class="row">-->
+<!--              <div class="col-12 text-center">-->
+<!--                <button type="button" class="btn btn-sm btn-primary block-element border-0 mb-1">Load More</button>-->
+<!--              </div>-->
+<!--            </div>-->
             <!--/ reload button -->
           </section>
           <!--/ profile info section -->
@@ -246,6 +295,7 @@
       </div>
     </div>
     <!-- END: Content-->
+<!--    story-->
     <div class="center">
       <vs-dialog v-model="show">
         <template #header>
@@ -287,6 +337,86 @@
       </vs-dialog>
     </div>
 
+    <!--    follow-->
+    <div class="center">
+      <vs-dialog v-model="show1">
+        <template #header>
+          <h4 class="not-margin">
+            Search with first name <b>follow doctor</b>
+          </h4>
+        </template>
+
+        <div class="con-form">
+          <vs-row w="12">
+            <vs-col w="12">
+              <vs-input
+                label="Search to follow your doctor"
+                v-model="char" placeholder="Search By User Name...">
+                <template #icon>
+                  <i class='bx bx-search'></i>
+                </template>
+              </vs-input>
+
+              <div v-for="user in getUserByChar" class="d-flex justify-content-start align-items-center mt-2">
+                <div v-if="user.role!==$auth.user.role" class="avatar mr-75">
+                  <vs-avatar badge badge-color="success" circle>
+                    <img
+                      :src="$get('PREFIX')+user.avatar"
+                      alt="avatar"
+                      height="40"
+                      width="40"
+                    />
+                  </vs-avatar>
+                </div>
+                <vs-row>
+                  <vs-col vs-type="flex" w="10">
+                    <div v-if="user.role!==$auth.user.role" class="profile-user-info">
+                      <h6 class="mb-0">{{ user.fname + " "+user.lname}}</h6>
+                      <small class="text-muted">6 Mutual Friends</small>
+                    </div>
+                  </vs-col>
+                  <vs-col vs-type="flex" w="2">
+                    <vs-button
+                      v-if="user.role!==$auth.user.role"
+                      icon
+                      @click="follow(user.id)"
+                    >
+                      <i class='bx bx-plus'></i>
+                    </vs-button>
+                  </vs-col>
+                </vs-row>
+              </div>
+
+            </vs-col>
+          </vs-row>
+          <br>
+          <br>
+        </div>
+      </vs-dialog>
+    </div>
+
+    <vs-dialog width="550px" not-center v-model="activeIntro">
+      <template #header>
+        <h4 class="not-margin">
+          Welcome to <b>Vuesax</b>
+        </h4>
+      </template>
+
+      <div class="con-content">
+        <p>
+          Vuesax is a relatively new framework with a refreshing design and in the latest trends, vuesax based on vuejs which means that we go hand in hand with one of the most popular javascript frameworks in the world and with a huge community with which you will have all the help and documentation to create and make your project
+        </p>
+      </div>
+
+      <template #footer>
+        <div class="con-footer">
+          <vs-button @click="activeIntro=false" transparent>
+            Ok
+          </vs-button>
+        </div>
+      </template>
+    </vs-dialog>
+
   </div>
 </template>
 
@@ -298,10 +428,18 @@ export default {
   data(){
     return{
       show:false,
+      show1:false,
+      activeIntro:false,
+      selectLoading:false,
+      char:"",
+      page:1,
+      followActive:false,
+      hideDelete:false,
       request:{
         title:"",
         desc:"",
-        Uid:""
+        Uid:"",
+        role:""
       },
       editorConfig: {
         simpleUpload: {
@@ -318,26 +456,51 @@ export default {
     this.$store.dispatch("AllPostById",this.$auth.user.id);
     this.$store.dispatch("AllBlogs");
     this.$store.dispatch("AllUsers");
+    this.$store.dispatch("AllUserByName","a");
+  },
+  created() {
+    // this.activeIntro=true
   },
   computed:{
     getPostsByUserId(){
       //todo:last step render value to component
-      return this.$store.getters.getPostsByUserId;
+      let obj= this.$store.getters.getPostsByUserId;
+      if(obj===undefined){
+        return [];
+      }
+      return obj;
     },
     getBlogs(){
       //todo:last step render value to component
-      return this.$store.getters.getBlogs;
+      let obj= this.$store.getters.getBlogs;
+      if(obj===undefined){
+        return [];
+      }
+      return obj;
     },
     getUsers(){
       //todo:last step render value to component
-      return this.$store.getters.getUsers;
+      let obj= this.$store.getters.getUsers;
+      if(obj===undefined){
+        return [];
+      }
+      return obj;
+    },
+    getUserByChar(){
+      //todo:last step render value to component
+      const allUsers=this.$store.getters.getUserByCharFname;
+      allUsers.length>0?this.selectLoading=false:null;
+      return allUsers;
     },
 
   },
   mounted() {
-
+    // localStorage.setItem("role",this.$auth.user.user_role);
   },
   methods:{
+    hideDel(flag){
+      this.hideDelete=flag;
+    },
     openNotification(position = null, border, icon, title, text) {
       const noti = this.$vs.notification({
         border,
@@ -347,6 +510,12 @@ export default {
         text: text
       })
     },
+    comment(){
+      this.openNotification('bottom-right', 'success',
+        `<i class='bx bx-select-multiple' ></i>`,
+        'Add Comment Successfully',
+        'New Admin added with rules and permissions');
+    },
     addPost(){
       this.$router.push({name: 'post-New',params: { status: 1 }});
     },
@@ -355,6 +524,7 @@ export default {
       if(this.request.title!=="" && this.request.desc!==""){
 
         this.request.Uid=this.$auth.user.id;
+        this.request.role=this.$auth.user.role;
 
         this.$axios.$post('/user-story/story',this.request)
           .then((response)=>{
@@ -363,6 +533,7 @@ export default {
               'Add New Story Successfully',
               'New Admin added with rules and permissions');
             this.show=false;
+            this.$store.dispatch("AllBlogs");
           })
           .catch((error)=>{
             this.openNotification('top-right', 'danger',
@@ -377,7 +548,76 @@ export default {
           "Inputs invalid make sure from inputs...");
         // loading.close();
       }
+    },
+    async follow(id,selfRelation=false){
+      let ids={}
+      if(this.$auth.user.role===1 && !selfRelation){
+        ids['user_id']=this.$auth.user.id;
+        ids['doctor_id']=id;
+      }else if(this.$auth.user.role===2){
+        ids['user_id']=id;
+        ids['doctor_id']=this.$auth.user.id;
+      }else if(selfRelation){
+        ids['user_self']=this.$auth.user.id;
+        ids['user_id']=id;
+      }
+
+      ids['role']=this.$auth.user.role;
+      ids['selfRelation']=selfRelation;
+
+      this.$axios.$get('/user/setDoctorFollow/'+JSON.stringify(ids))
+        .then((response)=>{
+          this.openNotification('bottom-right', 'success',
+            `<i class='bx bx-select-multiple' ></i>`,
+            'Now Following Successfully',
+            'New Admin added with rules and permissions');
+
+          this.$store.dispatch("AllPostById",this.$auth.user.id);
+          // let users=this.getUserByChar
+          // await users=users.filter((user)=>{
+          //   return user.id!==id
+          // })
+          // console.table(users)
+          this.followActive=true;
+        })
+        .catch((error)=>{
+          this.openNotification('top-right', 'danger',
+            `<i class='bx bxs-bug' ></i>`,
+            'Make Sure From Inputs',
+            error);
+        });
+    },
+    deletePost($id){
+      this.$axios.delete('/user-post/posts/'+($id))
+        .then((response)=>{
+          if(response.data!=="error"){
+            this.openNotification('bottom-right',
+              'success',
+              `<i class='bx bx-select-multiple' ></i>`,
+              "Post Is Deleted Successfully",
+              "Can add new role will be able to handle new permission and assign users...");
+            this.$store.dispatch("AllPostById",this.$auth.user.id);
+          }
+          else{
+            this.openNotification('top-right',
+              'danger',
+              `<i class='bx bx-select-multiple' ></i>`,
+              "Error In Remove",
+              "Can add new role will be able to handle new permission and assign users...");
+          }
+        })
+        .catch((error)=>{
+          // window.location='/admin/invalidToken';
+        });
     }
+  },
+  watch:{
+    char(newVal,oldVal){
+      newVal===""?this.$store.dispatch("AllUserByName","a"):
+        this.$store.dispatch("AllUserByName",newVal);
+
+      this.selectLoading=true;
+    },
   },
   components: {
     'ckeditor-nuxt': () => { if (process.client) { return import('@blowstack/ckeditor-nuxt') } },
@@ -397,4 +637,69 @@ export default {
 .buttons-timeline{
   margin-left:0px ;
 }
+
+.con-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.con-footer .vs-button {
+  margin: 0px;
+}
+.con-footer .vs-button .vs-button__content {
+  padding: 10px 30px;
+}
+.con-footer .vs-button ~ .vs-button {
+  margin-left: 10px;
+}
+.not-margin {
+  margin: 0px;
+  font-weight: normal;
+  padding: 10px;
+  padding-bottom: 0px;
+}
+.con-content {
+  width: 100%;
+}
+.con-content p {
+  font-size: 0.8rem;
+  padding: 0px 10px;
+}
+.con-content .vs-checkbox-label {
+  font-size: 0.8rem;
+}
+.con-content .vs-input-parent {
+  width: 100%;
+}
+.con-content .vs-input-content {
+  margin: 10px 0px;
+  width: calc(100%);
+}
+.con-content .vs-input-content .vs-input {
+  width: 100%;
+}
+.footer-dialog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: calc(100%);
+}
+.footer-dialog .new {
+  margin: 0px;
+  margin-top: 20px;
+  padding: 0px;
+  font-size: 0.7rem;
+}
+.footer-dialog .new a {
+  color: rgba(var(--vs-primary), 1) !important;
+  margin-left: 6px;
+}
+.footer-dialog .new a:hover {
+  text-decoration: underline;
+}
+.footer-dialog .vs-button {
+  margin: 0px;
+}
+
 </style>

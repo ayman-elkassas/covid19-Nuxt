@@ -43,6 +43,7 @@ export default {
   plugins: [
     '@/plugins/vuesax',
     '@/plugins/multiselect',
+    '@/plugins/doctorFlag',
     '@/plugins/overlayscrollbars',
     '@/plugins/moment',
     { src: "@/plugins/vuetimeline.js" },
@@ -53,7 +54,8 @@ export default {
   //todo: this is right way auth syntax
   auth:{
     strategies:{
-      'laravelJWT':{
+      user: {
+        scheme: 'laravelJWT',
         provider: 'users',
         url: '/api',
         endpoints:{
@@ -68,7 +70,24 @@ export default {
         refreshToken: {
           maxAge: 20160 * 60
         },
-      }
+      },
+      doctor: {
+        scheme: 'laravelJWT',
+        provider: 'doctors',
+        url: '/api',
+        endpoints:{
+          login:{url:"/auth/login_doctor/",method:'post',propertyName:'false'},
+          user: { url: '/auth/doctor/', method: 'get', propertyName: 'false' },
+          logout: { url: '/auth/doctor_logout/', method: 'get',propertyName: 'false' }
+        },
+        token: {
+          property: 'access_token',
+          maxAge: 10080
+        },
+        refreshToken: {
+          maxAge: 20160 * 60
+        },
+      },
     },
     redirect:{
       login:'/auth/login/',

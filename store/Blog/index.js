@@ -6,10 +6,11 @@ const moduleBlog = {
     AllBlogs(context){
       this.$axios.$get('/user-story/story')
         .then((response)=>{
-          context.commit('userBlogs',response);
+          context.commit('userBlogs',response.reverse());
         })
         .catch((error)=>{
-          window.location='/error';
+          console.log("AllBlogs")
+          // window.location='/error';
         });
     },
   },

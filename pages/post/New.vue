@@ -104,6 +104,7 @@ export default {
       postType: 1,
       postDesc: "",
       postCover: "",
+      role:1,
     },
     editorConfig: {
       simpleUpload: {
@@ -134,6 +135,7 @@ export default {
         && this.request.postDesc!=="" && this.request.postCover!==""){
 
         this.request.Uid=this.$auth.user.id;
+        this.request.role=this.$auth.user.role;
 
         const loading = this.$vs.loading({
           target: this.$refs.button1,
@@ -150,7 +152,7 @@ export default {
               'Add New Post Successfully',
               'New Admin added with rules and permissions');
 
-            this.$router.push({name: 'home/timeline'});
+            this.$router.push({name: 'home-timeline'});
 
           })
           .catch((error)=>{

@@ -2565,8 +2565,7 @@
               <div class="row align-items-center">
                 <div class="col-md-6">
                   <p class="nk-copyright">
-                    &copy; 2020 KOVID-19. Template Made by
-                    <a href="https://softnio.com/">Softnio</a>.
+                    &copy; 2020 KOVID-19
                   </p>
                 </div>
                 <div class="col-md-6">
@@ -2599,6 +2598,7 @@
 </template>
 
 <script>
+
 export default {
   name: "index",
   layout: "LandingLayout/landing",
@@ -2607,6 +2607,9 @@ export default {
       active: 'home',
       authenticate:this.$auth.loggedIn,
     }
+  },
+  mounted() {
+
   },
   methods:{
     logout(){

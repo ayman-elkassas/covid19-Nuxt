@@ -31,7 +31,8 @@
                     <!-- profile title -->
                     <div class="profile-title ml-3">
                       <h2 class="text-white">{{ $auth.user.fname }} {{$auth.user.lname}}</h2>
-                      <p class="text-white">Software Engineer</p>
+                      <p v-if="$auth.user.role===1" class="text-white">Normal User</p>
+                      <p v-else-if="$auth.user.role===2" class="text-white">Doctor</p>
                     </div>
                   </div>
                 </div>
@@ -102,109 +103,6 @@
             <div class="row">
               <!-- left profile info section -->
               <div class="col-lg-3 col-12 order-2 order-lg-1">
-                <!-- about -->
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="mb-75">About</h5>
-                    <p class="card-text">
-                      Tart I love sugar plum I love oat cake. Sweet ⭐️ roll caramels I love jujubes. Topping cake wafer.
-                    </p>
-                    <div class="mt-2">
-                      <h5 class="mb-75">Joined:</h5>
-                      <p class="card-text">November 15, 2015</p>
-                    </div>
-                    <div class="mt-2">
-                      <h5 class="mb-75">Lives:</h5>
-                      <p class="card-text">New York, USA</p>
-                    </div>
-                    <div class="mt-2">
-                      <h5 class="mb-75">Email:</h5>
-                      <p class="card-text">bucketful@fiendhead.org</p>
-                    </div>
-                    <div class="mt-2">
-                      <h5 class="mb-50">Website:</h5>
-                      <p class="card-text mb-0">www.pixinvent.com</p>
-                    </div>
-                  </div>
-                </div>
-                <!--/ about -->
-
-                <!-- suggestion pages -->
-                <div class="card">
-                  <div class="card-body profile-suggestion">
-                    <h5 class="mb-2">Suggested Pages</h5>
-                    <!-- user suggestions -->
-                    <div class="d-flex justify-content-start align-items-center mb-1">
-                      <div class="avatar mr-1">
-                        <img src="~/assets/home/app-assets/images/avatars/12-small.png" alt="avatar img" height="40" width="40" />
-                      </div>
-                      <div class="profile-user-info">
-                        <h6 class="mb-0">Peter Reed</h6>
-                        <small class="text-muted">Company</small>
-                      </div>
-                      <div class="profile-star ml-auto"><i data-feather="star" class="font-medium-3"></i></div>
-                    </div>
-                    <!-- user suggestions -->
-                    <div class="d-flex justify-content-start align-items-center mb-1">
-                      <div class="avatar mr-1">
-                        <img src="~/assets/home/app-assets/images/avatars/1-small.png" alt="avatar" height="40" width="40" />
-                      </div>
-                      <div class="profile-user-info">
-                        <h6 class="mb-0">Harriett Adkins</h6>
-                        <small class="text-muted">Company</small>
-                      </div>
-                      <div class="profile-star ml-auto"><i data-feather="star" class="font-medium-3"></i></div>
-                    </div>
-                    <!-- user suggestions -->
-                    <div class="d-flex justify-content-start align-items-center mb-1">
-                      <div class="avatar mr-1">
-                        <img src="~/assets/home/app-assets/images/avatars/10-small.png" alt="avatar" height="40" width="40" />
-                      </div>
-                      <div class="profile-user-info">
-                        <h6 class="mb-0">Juan Weaver</h6>
-                        <small class="text-muted">Company</small>
-                      </div>
-                      <div class="profile-star ml-auto"><i data-feather="star" class="font-medium-3"></i></div>
-                    </div>
-                    <!-- user suggestions -->
-                    <div class="d-flex justify-content-start align-items-center mb-1">
-                      <div class="avatar mr-1">
-                        <img src="~/assets/home/app-assets/images/avatars/3-small.png" alt="avatar img" height="40" width="40" />
-                      </div>
-                      <div class="profile-user-info">
-                        <h6 class="mb-0">Claudia Chandler</h6>
-                        <small class="text-muted">Company</small>
-                      </div>
-                      <div class="profile-star ml-auto"><i data-feather="star" class="font-medium-3"></i></div>
-                    </div>
-                    <!-- user suggestions -->
-                    <div class="d-flex justify-content-start align-items-center mb-1">
-                      <div class="avatar mr-1">
-                        <img src="~/assets/home/app-assets/images/avatars/5-small.png" alt="avatar img" height="40" width="40" />
-                      </div>
-                      <div class="profile-user-info">
-                        <h6 class="mb-0">Earl Briggs</h6>
-                        <small class="text-muted">Company</small>
-                      </div>
-                      <div class="profile-star ml-auto">
-                        <i data-feather="star" class="profile-favorite font-medium-3"></i>
-                      </div>
-                    </div>
-                    <!-- user suggestions -->
-                    <div class="d-flex justify-content-start align-items-center">
-                      <div class="avatar mr-1">
-                        <img src="~/assets/home/app-assets/images/avatars/6-small.png" alt="avatar img" height="40" width="40" />
-                      </div>
-                      <div class="profile-user-info">
-                        <h6 class="mb-0">Jonathan Lyons</h6>
-                        <small class="text-muted">Beauty Store</small>
-                      </div>
-                      <div class="profile-star ml-auto"><i data-feather="star" class="font-medium-3"></i></div>
-                    </div>
-                  </div>
-                </div>
-                <!--/ suggestion pages -->
-
                 <!-- twitter feed card -->
                 <div class="card">
                   <div class="card-body">
@@ -393,216 +291,31 @@
                     <button type="button" class="btn btn-sm btn-primary">Post Comment</button>
                   </div>
                 </div>
+                <div v-if="getPostsByUserId.length<=0">
+                  <vs-alert :page.sync="page" >
+                    <template #title>
+                      No Posts Yet
+                    </template>
+
+                    <template #page-1>
+                      Most people infected with the COVID-19 virus will experience mild to moderate respiratory illness and recover without requiring special treatment.
+                    </template>
+
+                    <template #page-2>
+                      Older people, and those with underlying medical problems like cardiovascular disease, diabetes, chronic respiratory disease, and cancer are more likely to develop serious illness.
+                    </template>
+
+                    <template #page-3>
+                      The best way to prevent and slow down transmission is to be well informed about the COVID-19 virus, the disease it causes and how it spreads.
+                    </template>
+                  </vs-alert>
+                </div>
                 <!--/ post 1 -->
               </div>
               <!--/ center profile info section -->
 
               <!-- right profile info section -->
               <div class="col-lg-3 col-12 order-3">
-                <!-- latest profile pictures -->
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="mb-0">Latest Photos</h5>
-                    <div class="row">
-                      <div class="col-md-4 col-6 profile-latest-img">
-                        <a href="javascript:void(0)">
-                          <img
-                            src="~/assets/home/app-assets/images/profile/user-uploads/user-13.jpg"
-                            class="img-fluid rounded"
-                            alt="avatar img"
-                          />
-                        </a>
-                      </div>
-                      <div class="col-md-4 col-6 profile-latest-img">
-                        <a href="javascript:void(0)">
-                          <img
-                            src="~/assets/home/app-assets/images/profile/user-uploads/user-02.jpg"
-                            class="img-fluid rounded"
-                            alt="avatar img"
-                          />
-                        </a>
-                      </div>
-                      <div class="col-md-4 col-6 profile-latest-img">
-                        <a href="javascript:void(0)">
-                          <img
-                            src="~/assets/home/app-assets/images/profile/user-uploads/user-03.jpg"
-                            class="img-fluid rounded"
-                            alt="avatar img"
-                          />
-                        </a>
-                      </div>
-                      <div class="col-md-4 col-6 profile-latest-img">
-                        <a href="javascript:void(0)">
-                          <img
-                            src="~/assets/home/app-assets/images/profile/user-uploads/user-04.jpg"
-                            class="img-fluid rounded"
-                            alt="avatar img"
-                          />
-                        </a>
-                      </div>
-                      <div class="col-md-4 col-6 profile-latest-img">
-                        <a href="javascript:void(0)">
-                          <img
-                            src="~/assets/home/app-assets/images/profile/user-uploads/user-05.jpg"
-                            class="img-fluid rounded"
-                            alt="avatar img"
-                          />
-                        </a>
-                      </div>
-                      <div class="col-md-4 col-6 profile-latest-img">
-                        <a href="javascript:void(0)">
-                          <img
-                            src="~/assets/home/app-assets/images/profile/user-uploads/user-06.jpg"
-                            class="img-fluid rounded"
-                            alt="avatar img"
-                          />
-                        </a>
-                      </div>
-                      <div class="col-md-4 col-6 profile-latest-img">
-                        <a href="javascript:void(0)">
-                          <img
-                            src="~/assets/home/app-assets/images/profile/user-uploads/user-07.jpg"
-                            class="img-fluid rounded"
-                            alt="avatar img"
-                          />
-                        </a>
-                      </div>
-                      <div class="col-md-4 col-6 profile-latest-img">
-                        <a href="javascript:void(0)">
-                          <img
-                            src="~/assets/home/app-assets/images/profile/user-uploads/user-08.jpg"
-                            class="img-fluid rounded"
-                            alt="avatar img"
-                          />
-                        </a>
-                      </div>
-                      <div class="col-md-4 col-6 profile-latest-img">
-                        <a href="javascript:void(0)">
-                          <img
-                            src="~/assets/home/app-assets/images/profile/user-uploads/user-09.jpg"
-                            class="img-fluid rounded"
-                            alt="avatar img"
-                          />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!--/ latest profile pictures -->
-
-                <!-- suggestion -->
-                <div class="card">
-                  <div class="card-body">
-                    <h5>Suggestions</h5>
-                    <div class="d-flex justify-content-start align-items-center mt-2">
-                      <div class="avatar mr-75">
-                        <img
-                          src="~/assets/home/app-assets/images/portrait/small/avatar-s-9.jpg"
-                          alt="avatar"
-                          height="40"
-                          width="40"
-                        />
-                      </div>
-                      <div class="profile-user-info">
-                        <h6 class="mb-0">Peter Reed</h6>
-                        <small class="text-muted">6 Mutual Friends</small>
-                      </div>
-                      <button type="button" class="btn btn-primary btn-icon btn-sm ml-auto">
-                        <i class="bx bx-plus"></i>
-                      </button>
-                    </div>
-                    <div class="d-flex justify-content-start align-items-center mt-1">
-                      <div class="avatar mr-75">
-                        <img
-                          src="~/assets/home/app-assets/images/portrait/small/avatar-s-6.jpg"
-                          alt="avtar img holder"
-                          height="40"
-                          width="40"
-                        />
-                      </div>
-                      <div class="profile-user-info">
-                        <h6 class="mb-0">Harriett Adkins</h6>
-                        <small class="text-muted">3 Mutual Friends</small>
-                      </div>
-                      <button type="button" class="btn btn-primary btn-sm btn-icon ml-auto">
-                        <i class="bx bx-plus"></i>
-                      </button>
-                    </div>
-                    <div class="d-flex justify-content-start align-items-center mt-1">
-                      <div class="avatar mr-75">
-                        <img
-                          src="~/assets/home/app-assets/images/portrait/small/avatar-s-7.jpg"
-                          alt="avatar"
-                          height="40"
-                          width="40"
-                        />
-                      </div>
-                      <div class="profile-user-info">
-                        <h6 class="mb-0">Juan Weaver</h6>
-                        <small class="text-muted">1 Mutual Friends</small>
-                      </div>
-                      <button type="button" class="btn btn-sm btn-primary btn-icon ml-auto">
-                        <i class="bx bx-plus"></i>
-                      </button>
-                    </div>
-                    <div class="d-flex justify-content-start align-items-center mt-1">
-                      <div class="avatar mr-75">
-                        <img
-                          src="~/assets/home/app-assets/images/portrait/small/avatar-s-8.jpg"
-                          alt="avatar img"
-                          height="40"
-                          width="40"
-                        />
-                      </div>
-                      <div class="profile-user-info">
-                        <h6 class="mb-0">Claudia Chandler</h6>
-                        <small class="text-muted">16 Mutual Friends</small>
-                      </div>
-                      <button type="button" class="btn btn-sm btn-primary btn-icon ml-auto">
-                        <i class="bx bx-plus"></i>
-
-                      </button>
-                    </div>
-                    <div class="d-flex justify-content-start align-items-center mt-1">
-                      <div class="avatar mr-75">
-                        <img
-                          src="~/assets/home/app-assets/images/portrait/small/avatar-s-1.jpg"
-                          alt="avatar img"
-                          height="40"
-                          width="40"
-                        />
-                      </div>
-                      <div class="profile-user-info">
-                        <h6 class="mb-0">Earl Briggs</h6>
-                        <small class="text-muted">4 Mutual Friends</small>
-                      </div>
-                      <button type="button" class="btn btn-sm btn-primary btn-icon ml-auto">
-                        <i class="bx bx-plus"></i>
-
-                      </button>
-                    </div>
-                    <div class="d-flex justify-content-start align-items-center mt-1">
-                      <div class="avatar mr-75">
-                        <img
-                          src="~/assets/home/app-assets/images/portrait/small/avatar-s-10.jpg"
-                          alt="avatar img"
-                          height="40"
-                          width="40"
-                        />
-                      </div>
-                      <div class="profile-user-info">
-                        <h6 class="mb-0">Jonathan Lyons</h6>
-                        <small class="text-muted">25 Mutual Friends</small>
-                      </div>
-                      <button type="button" class="btn btn-sm btn-primary btn-icon ml-auto">
-                        <i class="bx bx-plus"></i>
-
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <!--/ suggestion -->
-
                 <!-- polls card -->
                 <div class="card">
                   <div class="card-body">
@@ -701,15 +414,20 @@ export default {
   layout:"Home/home",
   data(){
     return{
+      page:1,
     }
   },
   beforeCreate() {
-    this.$store.dispatch("AllPostById",this.$auth.user.id);
+    this.$store.dispatch("OwnPostsById",this.$auth.user.id);
   },
   computed:{
     getPostsByUserId(){
       //todo:last step render value to component
-      return this.$store.getters.getPostsByUserId;
+      let obj=this.$store.getters.getOwnPostsByUserId;
+      if(obj===undefined){
+        return [];
+      }
+      return obj;
     },
   },
   mounted() {

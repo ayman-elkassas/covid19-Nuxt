@@ -92,6 +92,10 @@ export default {
       type: String,
       default: ''
     },
+    role: {
+      type: Number,
+      default: 1
+    },
   },
   methods:{
     handleFilePondInit: function() {
@@ -138,12 +142,24 @@ export default {
 
       this.request.email = this.$props.email;
       this.request.password = this.$props.password;
+      this.request.role=this.$props.role;
 
       //todo:await for wait to execute
       await this.$axios.$post(`api/auth/registerUser`, this.request).then((res) => {
 
         if (typeof res.access_token !== 'undefined') {
-          this.$auth.setUserToken(res.access_token, true)
+
+          if(this.request.role===1){
+            this.$auth.setToken('user', 'Bearer ' + res.access_token)
+            this.$auth.setRefreshToken('user', res.refresh_token)
+            this.$auth.setUserToken(res.access_token)
+          }else if(this.request.role===2) {
+            this.$auth.setToken('doctor', 'Bearer ' + res.access_token)
+            this.$auth.setRefreshToken('doctor', res.refresh_token)
+          }
+          this.$axios.setHeader('Authorization', 'Bearer ' + res.access_token)
+          this.$auth.ctx.app.$axios.setHeader('Authorization', 'Bearer ' + res.access_token)
+          this.$auth.setUser(res.data);
         }
 
         this.openNotification('bottom-right', 'success',
@@ -154,8 +170,9 @@ export default {
         this.loading.close()
         clearInterval(this.interval)
         this.percent = 0
+        this.$router.push({name: 'home-timeline',params: { first: 1}});
 
-        this.$router.push({name: "home-timeline", params: {completeSkills: true}});
+        // window.location.reload();
 
       }).catch((error) => {
         this.openNotification('top-left', 'danger',

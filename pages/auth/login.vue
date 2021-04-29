@@ -46,12 +46,26 @@
 
     <br>
 
+    <vs-row>
+      <vs-col w="6">
+        <vs-radio v-model="request.role" val="1">
+          Patient
+        </vs-radio>
+      </vs-col>
+      <vs-col w="6">
+        <vs-radio v-model="request.role" val="2">
+          Doctor
+        </vs-radio>
+      </vs-col>
+    </vs-row>
+    <br>
+
     <button class="btn btn-block btn-primary mb-0" :disabled="!activeSignIn" @click="Login()">Sign in</button>
     <div class="text-center">
       <div class="saprator my-4"><span>OR</span></div>
-      <button class="btn text-white bg-facebook mb-2 mr-2  wid-40 px-0 hei-40 rounded-circle"><i class="bx bxl-facebook"></i></button>
-      <button class="btn text-white bg-googleplus mb-2 mr-2 wid-40 px-0 hei-40 rounded-circle"><i class="bx bxl-google-plus"></i></button>
-      <button class="btn text-white bg-twitter mb-2  wid-40 px-0 hei-40 rounded-circle"><i class="bx bxl-twitter"></i></button>
+<!--      <button class="btn text-white bg-facebook mb-2 mr-2  wid-40 px-0 hei-40 rounded-circle"><i class="bx bxl-facebook"></i></button>-->
+<!--      <button class="btn text-white bg-googleplus mb-2 mr-2 wid-40 px-0 hei-40 rounded-circle"><i class="bx bxl-google-plus"></i></button>-->
+<!--      <button class="btn text-white bg-twitter mb-2  wid-40 px-0 hei-40 rounded-circle"><i class="bx bxl-twitter"></i></button>-->
       <p class="mb-2 mt-4 text-muted">Forgot password? <a href="auth-reset-password-img-side.html" class="f-w-400">Reset</a></p>
       <p class="mt-4">Don’t have an account? <nuxt-link to="/auth/signup" class="f-w-400">Signup</nuxt-link></p>
       <p class="mb-0 text-muted">Back to home? <nuxt-link to="/" class="f-w-400">Home</nuxt-link></p>
@@ -61,6 +75,7 @@
 </template>
 
 <script>
+
 export default {
   name: "login",
   layout:"AuthLayout/auth",
@@ -70,6 +85,7 @@ export default {
       request: {
         email: "",
         password: "",
+        role:1,
       },
       active: false,
       color: '#7a76cb',
@@ -141,20 +157,42 @@ export default {
       await this.$axios.$post(`api/auth/login`,this.request).then((res)=> {
 
         if (typeof res.access_token !== 'undefined') {
-          this.$auth.setUserToken(res.access_token, true)
+
+          if(this.request.role===1){
+            this.$auth.setToken('user', 'Bearer ' + res.access_token)
+            this.$auth.setRefreshToken('user', res.refresh_token)
+            this.$auth.setUserToken(res.access_token)
+          }else if(this.request.role===2) {
+            this.$auth.setToken('doctor', 'Bearer ' + res.access_token)
+            this.$auth.setRefreshToken('doctor', res.refresh_token)
+          }
+          this.$axios.setHeader('Authorization', 'Bearer ' + res.access_token)
+          this.$auth.ctx.app.$axios.setHeader('Authorization', 'Bearer ' + res.access_token)
+          this.$auth.setUser(res.data);
+
+          // this.$auth.setStrategy("doctor");
+
+          this.openNotification('bottom-right', 'success',
+            `<i class='bx bx-select-multiple' ></i>`,
+            'Login Successfully',
+            'New User added with rules and permissions');
+
+          this.loading.close()
+          clearInterval(this.interval)
+          this.percent = 0
+
+          this.$router.push({name: 'home-timeline'});
+
+        }else{
+          this.openNotification('top-left', 'danger',
+            `<i class='bx bxs-bug' ></i>`,
+            "Check Inputs",
+            'Username or password not matched with account credentials,' +
+            'make sure and try again...');
+          this.loading.close()
+          clearInterval(this.interval)
+          this.percent = 0
         }
-
-        this.openNotification('bottom-right', 'success',
-          `<i class='bx bx-select-multiple' ></i>`,
-          'Login Successfully',
-          'New User added with rules and permissions');
-
-        this.loading.close()
-        clearInterval(this.interval)
-        this.percent = 0
-
-        window.location.reload();
-
       });
     },
     openNotification(position = null, border,icon,title,text) {

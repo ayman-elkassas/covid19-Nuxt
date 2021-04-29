@@ -8,8 +8,8 @@
       open
       danger
     >
-      <template #logo>
-        <nuxt-link to="/">
+      <template  #logo>
+        <nuxt-link style="margin-left: 5px;" to="/">
           <img src="~/assets/home/app-assets/images/logo/covid.png" alt="">
         </nuxt-link>
       </template>
@@ -21,41 +21,20 @@
         </template>
         Home
       </vs-sidebar-item>
-      <vs-sidebar-item id="Music">
+      <vs-sidebar-item
+        to="/story/blog"
+        id="blog">
         <template #icon>
-          <i class='bx bxs-music'></i>
+          <i class='bx bxl-blogger'></i>
         </template>
-        Music
+        Covid Blogs
       </vs-sidebar-item>
-      <vs-sidebar-group>
-        <template #header>
-          <vs-sidebar-item arrow>
-            <template #icon>
-              <i class='bx bx-group'></i>
-            </template>
-            Social media
-          </vs-sidebar-item>
+      <vs-sidebar-item to="/info/" id="donate">
+        <template #icon>
+          <i class='bx bxs-donate-heart' ></i>
         </template>
-
-        <vs-sidebar-item id="Instagram">
-          <template #icon>
-            <i class='bx bxl-instagram'></i>
-          </template>
-          Instagram
-        </vs-sidebar-item>
-        <vs-sidebar-item id="twitter">
-          <template #icon>
-            <i class='bx bxl-twitter' ></i>
-          </template>
-          Twitter
-        </vs-sidebar-item>
-        <vs-sidebar-item id="Facebook">
-          <template #icon>
-            <i class='bx bxl-facebook' ></i>
-          </template>
-          Facebook
-        </vs-sidebar-item>
-      </vs-sidebar-group>
+        Precaution measures
+      </vs-sidebar-item>
       <vs-sidebar-group>
         <template #header>
           <vs-sidebar-item arrow>
@@ -97,29 +76,36 @@
           Git
         </vs-sidebar-item>
       </vs-sidebar-group>
-      <vs-sidebar-item id="donate">
+
+      <vs-sidebar-item to="/home/profile" id="profile">
         <template #icon>
-          <i class='bx bxs-donate-heart' ></i>
+          <i class='bx bx-user'></i>
         </template>
-        Donate
+        Profile
       </vs-sidebar-item>
-      <vs-sidebar-item id="drink">
+      <vs-sidebar-item to="/report/" id="report">
         <template #icon>
-          <i class='bx bx-drink'></i>
+          <i class='bx bx-book' ></i>
         </template>
-        Drink
-      </vs-sidebar-item>
-      <vs-sidebar-item id="shopping">
-        <template #icon>
-          <i class='bx bxs-shopping-bags'></i>
-        </template>
-        Shopping
+        Doctor Reports
       </vs-sidebar-item>
       <vs-sidebar-item id="chat">
         <template #icon>
-          <i class='bx bx-chat' ></i>
+          <i class='bx bx-adjust' ></i>
         </template>
-        Chat
+        Adjust
+      </vs-sidebar-item>
+      <vs-sidebar-item id="chat">
+        <template #icon>
+          <i class='bx bx-analyse' ></i>
+        </template>
+        Analyse
+      </vs-sidebar-item>
+      <vs-sidebar-item id="chat">
+        <template #icon>
+          <i class='bx bx-archive' ></i>
+        </template>
+        Archive
       </vs-sidebar-item>
       <template #footer>
         <vs-row justify="space-between">

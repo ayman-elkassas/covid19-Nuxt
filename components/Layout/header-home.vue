@@ -29,34 +29,30 @@
             <i class='bx bx-album'></i>
             Covid Blogs
           </vs-navbar-item>
-          <vs-navbar-item :active="active === 'license'" id="license">
+          <vs-navbar-item to="/info/" :active="active === 'measure'" id="measure">
             <i class='bx bx-book'></i>
-            license
+            Precautionary measures
           </vs-navbar-item>
-          <vs-navbar-item :active="active === 'docs'" id="docs">
+          <vs-navbar-item to="/report/" :active="active === 'report'" id="report">
             <i class='bx bx-alarm'></i>
-            Documents
+            Doctor Report
           </vs-navbar-item>
-          <vs-navbar-item>
-            <i class='bx bx-album'></i>
+          <vs-navbar-item to="/home/profile" :active="active === 'comp'" id="comp">
+            <i class='bx bx-user'></i>
+            Profile
+          </vs-navbar-item>
+          <vs-navbar-item :active="active === 'lice'" id="lice">
+            <i class='bx bx-book'></i>
+            Licence
+          </vs-navbar-item>
+          <vs-navbar-item :active="active === 'copy'" id="copy">
+            <i class='bx bx-book'></i>
             Components
-          </vs-navbar-item>
-          <vs-navbar-item :active="active === 'license'" id="license">
-            <i class='bx bx-book'></i>
-            license
-          </vs-navbar-item>
-          <vs-navbar-item :active="active === 'license'" id="license">
-            <i class='bx bx-book'></i>
-            license
-          </vs-navbar-item>
-          <vs-navbar-item :active="active === 'license'" id="license">
-            <i class='bx bx-book'></i>
-            license
           </vs-navbar-item>
         </template>
         <template v-if="authenticate" #right>
           <vs-button @click="logout()" flat>Logout</vs-button>
-          <vs-button primary circle>{{$auth.user.fname}} {{$auth.user.lname}}</vs-button>
+          <vs-button to="/home/profile" primary circle>{{$auth.user.fname}} {{$auth.user.lname}}</vs-button>
         </template>
         <template v-else #right>
           <vs-button flat to="/auth/login">Login</vs-button>
