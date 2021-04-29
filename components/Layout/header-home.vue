@@ -12,7 +12,7 @@
           <vs-navbar-item
             to="/home/profile"
             :active="active === 'guide'" id="guide">
-            <vs-avatar v-if="$auth.user.avatar!='' || $auth.user.avatar!=null" badge badge-color="success" history primary>
+            <vs-avatar v-if="!($auth.user.avatar!='' || $auth.user.avatar!=null)" badge badge-color="success" history primary>
               <img :src="$get('PREFIX')+$auth.user.avatar" alt="">
               <template #badge>
                 {{$auth.user.fname[0] + $auth.user.lname[0]}}
