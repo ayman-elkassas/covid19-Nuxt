@@ -115,8 +115,11 @@
               28
             </template>
           </vs-avatar>
-          <vs-avatar style="margin-left:3px" history badge primary badge-color="success">
+          <vs-avatar v-if="$auth.user.avatar==''" style="margin-left:3px" history badge primary badge-color="success">
             <img :src="$get('PREFIX')+$auth.user.avatar" alt="">
+          </vs-avatar>
+          <vs-avatar v-else style="margin-left:3px" history badge primary badge-color="success">
+            <img src="~/assets/LandingStyle/images/gfx/gfx-b.png" alt="">
           </vs-avatar>
         </vs-row>
       </template>

@@ -187,8 +187,11 @@
                     <div class="d-flex justify-content-start align-items-center mb-1">
                       <!-- avatar -->
                       <div class="avatar mr-1">
-                        <vs-avatar circle badge badge-color="success">
+                        <vs-avatar v-if="$auth.user.avatar==''" circle badge badge-color="success">
                           <img :src="$get('PREFIX')+$auth.user.avatar" alt="">
+                        </vs-avatar>
+                        <vs-avatar v-else circle badge badge-color="success">
+                          <img src="~/assets/home/app-assets/images/avatars/2.png" alt="">
                         </vs-avatar>
                       </div>
                       <!--/ avatar -->
