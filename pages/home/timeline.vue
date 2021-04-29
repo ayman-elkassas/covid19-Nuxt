@@ -120,7 +120,7 @@
                     </p>
                     <!-- post img -->
                     <img
-                      v-if="!(post.post_cover!=='' || post.post_cover!==null)"
+                      v-if="!(post.post_cover==='' || post.post_cover===null)"
                       class="img-fluid rounded mb-75"
                       :src="$get('PREFIX')+post.post_cover"
                       alt="avatar img"
