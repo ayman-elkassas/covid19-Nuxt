@@ -21,11 +21,18 @@
                 <div class="position-relative">
                   <!-- profile picture -->
                   <div class="profile-img-container d-flex align-items-center">
-                    <div class="profile-img">
+                    <div v-if="!($auth.user.avatar==='' || $auth.user.avatar===null)" class="profile-img">
                       <img
                         :src="$get('PREFIX')+$auth.user.avatar"
                         class="rounded img-fluid"
                         alt="Card image"
+                      />
+                    </div>
+                    <div else class="profile-img">
+                      <img
+                      src="~/assets/home/app-assets/images/avatars/2.png"
+                      class="rounded img-fluid"
+                      alt="Card image"
                       />
                     </div>
                     <!-- profile title -->
@@ -205,8 +212,15 @@
                     </p>
                     <!-- post img -->
                     <img
+                      v-if="!(post.post_cover==='' || post.post_cover===null)"
                       class="img-fluid rounded mb-75"
                       :src="$get('PREFIX')+post.post_cover"
+                      alt="avatar img"
+                    />
+                    <img
+                      v-else
+                      class="img-fluid rounded mb-75"
+                      src="~/assets/LandingStyle/images/gfx/gfx-b.png"
                       alt="avatar img"
                     />
                     <!--/ post img -->

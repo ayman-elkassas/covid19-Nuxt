@@ -18,6 +18,12 @@
                 {{$auth.user.fname[0] + $auth.user.lname[0]}}
               </template>
             </vs-avatar>
+            <vs-avatar v-else badge badge-color="success" history primary>
+              <img src="~/assets/home/app-assets/images/avatars/2.png" alt="">
+              <template #badge>
+                {{$auth.user.fname[0] + $auth.user.lname[0]}}
+              </template>
+            </vs-avatar>
           </vs-navbar-item>
           <vs-navbar-item
             to="/home/timeline"
