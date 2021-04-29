@@ -2523,7 +2523,10 @@
                   <div class="wgs wgs-menu">
                     <h6 class="wgs-title">Quick Link</h6>
                     <ul class="wgs-links">
-                      <li><a class="scrollto" href="#symptoms">Symptoms</a></li>
+                      <li><nuxt-link class="scrollto" to="/home/timeline">
+                        Home
+                      </nuxt-link>
+                      </li>
                       <li>
                         <a class="scrollto" href="#prevention">Prevention</a>
                       </li>
