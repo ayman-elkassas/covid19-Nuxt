@@ -119,6 +119,7 @@
                       {{post.desc.replace(/<[^>]*>/g, '')}}
                     </p>
                     <!-- post img -->
+                    {{post.post_cover}}
                     <img
                       v-if="post.post_cover!=='' || post.post_cover!==null"
                       class="img-fluid rounded mb-75"
