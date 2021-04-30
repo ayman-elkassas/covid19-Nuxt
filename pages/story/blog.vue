@@ -100,6 +100,50 @@
         </vs-alert>
       </div>
     </vs-row>
+
+    <!--    story-->
+    <div class="center">
+      <vs-dialog v-model="show">
+        <template #header>
+          <h4 class="not-margin">
+            Add Your Story <b>With Corona Virus</b>
+          </h4>
+        </template>
+
+        <div class="con-form">
+          <vs-row>
+            <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12">
+              <vs-input v-model="request.title"
+                        label="Post Title"
+                        placeholder="What's in your mind?">
+                <template #icon>
+                  <i class='bx bx-book'></i>
+                </template>
+              </vs-input>
+            </vs-col>
+          </vs-row>
+          <br>
+
+          <vs-row>
+            <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12">
+              <client-only placeholder="loading...">
+                <ckeditor-nuxt v-model="request.desc" :config="editorConfig"  />
+              </client-only>
+            </vs-col>
+          </vs-row>
+        </div>
+
+        <template #footer>
+          <div class="footer-dialog">
+            <vs-button @click="addStory()" block>
+              Add Covid Story
+            </vs-button>
+          </div>
+        </template>
+      </vs-dialog>
+    </div>
+
+
   </div>
 </template>
 
@@ -108,7 +152,23 @@ export default {
   name: "blog",
   layout: "Home/home",
   data:() => ({
-    page:1
+    page:1,
+    show:false,
+    request:{
+      title:"",
+      desc:"",
+      Uid:"",
+      role:""
+    },
+    editorConfig: {
+      simpleUpload: {
+        uploadUrl: 'path_to_image_controller',
+        headers: {
+          'Authorization': 'optional_token'
+        }
+      },
+      removePlugins: ['Title'],
+    },
   }),
   beforeCreate() {
     this.$store.dispatch("AllBlogs");
@@ -122,6 +182,41 @@ export default {
       }
       return obj;
     },
+  },
+  methods:{
+    addStory()
+    {
+      if(this.request.title!=="" && this.request.desc!==""){
+
+        this.request.Uid=this.$auth.user.id;
+        this.request.role=this.$auth.user.role;
+
+        this.$axios.$post('/user-story/story',this.request)
+          .then((response)=>{
+            this.openNotification('top-right', 'success',
+              `<i class='bx bx-select-multiple' ></i>`,
+              'Add New Story Successfully',
+              'New Admin added with rules and permissions');
+            this.show=false;
+            this.$store.dispatch("AllBlogs");
+          })
+          .catch((error)=>{
+            this.openNotification('top-right', 'danger',
+              `<i class='bx bxs-bug' ></i>`,
+              'Make Sure From Inputs',
+              error);
+          });
+      }else {
+        this.openNotification('top-right', 'danger',
+          `<i class='bx bxs-bug' ></i>`,
+          'Make Sure From Inputs',
+          "Inputs invalid make sure from inputs...");
+        // loading.close();
+      }
+    },
+  },
+  components: {
+    'ckeditor-nuxt': () => { if (process.client) { return import('@blowstack/ckeditor-nuxt') } },
   },
 
 }
