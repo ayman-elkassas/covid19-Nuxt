@@ -184,6 +184,15 @@ export default {
     },
   },
   methods:{
+    openNotification(position = null, border, icon, title, text) {
+      const noti = this.$vs.notification({
+        border,
+        icon,
+        position,
+        title: title,
+        text: text
+      })
+    },
     addStory()
     {
       if(this.request.title!=="" && this.request.desc!==""){
