@@ -233,4 +233,8 @@ export default {
 
 <style scoped>
 
+vs-input{
+  width: 100%;
+}
+
 </style>
