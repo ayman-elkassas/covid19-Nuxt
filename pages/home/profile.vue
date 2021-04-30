@@ -21,14 +21,14 @@
                 <div class="position-relative">
                   <!-- profile picture -->
                   <div class="profile-img-container d-flex align-items-center">
-                    <div v-if="!($auth.user.avatar==='' || $auth.user.avatar===null)" class="profile-img">
+                    <div v-if="!($auth.user.avatar==='' || $auth.user.avatar==null)" class="profile-img">
                       <img
                         :src="$get('PREFIX')+$auth.user.avatar"
                         class="rounded img-fluid"
                         alt="Card image"
                       />
                     </div>
-                    <div else class="profile-img">
+                    <div v-else class="profile-img">
                       <img
                       src="~/assets/home/app-assets/images/avatars/2.png"
                       class="rounded img-fluid"
@@ -38,7 +38,7 @@
                     <!-- profile title -->
                     <div class="profile-title ml-3">
                       <h2 class="text-white">{{ $auth.user.fname }} {{$auth.user.lname}}</h2>
-                      <p v-if="$auth.user.role===1" class="text-white">Normal User</p>
+                      <p v-if="$auth.user.role===1" class="text-white">Patient</p>
                       <p v-else-if="$auth.user.role===2" class="text-white">Doctor</p>
                     </div>
                   </div>
