@@ -136,7 +136,7 @@ export default {
       return progress
     },
     activeSignIn(){
-      return this.validEmail && (this.getProgress>60);
+      return this.validEmail && this.request.password !== '';
     }
   },
   methods:{

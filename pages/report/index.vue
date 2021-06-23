@@ -2,12 +2,11 @@
   <div>
     <br>
     <vs-button
-      v-if="$auth.user.role===2"
+      v-if="$auth.user.role==='2'"
       @click="show=!show"
     >
       Create new
     </vs-button>
-    <br>
     <vs-row>
       <vs-col key="0" v-for="report in getReports" vs-type="flex" vs-justify="center" vs-align="center" w="6">
         <vs-card type="3">

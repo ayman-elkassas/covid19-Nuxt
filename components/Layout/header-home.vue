@@ -47,14 +47,14 @@
             <i class='bx bx-user'></i>
             Profile
           </vs-navbar-item>
-          <vs-navbar-item :active="active === 'lice'" id="lice">
+          <!-- <vs-navbar-item :active="active === 'lice'" id="lice">
             <i class='bx bx-book'></i>
             Licence
           </vs-navbar-item>
           <vs-navbar-item :active="active === 'copy'" id="copy">
             <i class='bx bx-book'></i>
             Components
-          </vs-navbar-item>
+          </vs-navbar-item> -->
         </template>
         <template v-if="authenticate" #right>
           <vs-button @click="logout()" flat>Logout</vs-button>
